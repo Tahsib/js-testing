@@ -3,9 +3,7 @@ document.getElementById("phone").oninput = function() {format_number()};
 function format_number(){
     const phone = document.getElementById("phone");
 
-    phone.value = phone.value.replace('(', '');
-    phone.value =  phone.value.replace(')', '');
-    phone.value =  phone.value.replace('-', '');
+    phone.value = phone.value.replace(/[()-]/g, '');
 
     let formattedInput = phone.value
     formattedInput = formattedInput.split("")
