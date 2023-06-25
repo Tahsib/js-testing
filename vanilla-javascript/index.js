@@ -1,11 +1,16 @@
-document.getElementById("phone").oninput = function() {format_number()};
+document.getElementById("phone").addEventListener("input", (e) => {
+    let v = e.target.value;
+    e.target.value = format_number(e.target);
+  });
 
-function format_number(){
-    const phone = document.getElementById("phone");
+function format_number(input){
+    let value = input.value
+    let pos = input.selectionStart;
+    console.log(pos);
 
-    phone.value = phone.value.replace(/[()-]/g, '');
-
-    let formattedInput = phone.value
+    value = value.replace(/[()-]/g, '');
+    
+    let formattedInput = value
     formattedInput = formattedInput.split("")
 
     if (formattedInput.length > 3) {
@@ -15,6 +20,8 @@ function format_number(){
     if (formattedInput.length > 8) {
         formattedInput = [...formattedInput.slice(0,8), '-', ...formattedInput.slice(8)]
     }
-    phone.value = formattedInput.join("")
+    value = formattedInput.join("")
+    input = input.setSelectionRange(pos, pos)
+    return value
 }
 
