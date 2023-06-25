@@ -1,6 +1,7 @@
 document.getElementById("phone").addEventListener("input", (e) => {
-    let v = e.target.value;
-    e.target.value = format_number(e.target);
+    let [v , p] = format_number(e.target);
+    e.target.value = v
+    e.target.setSelectionRange(p,p)
   });
 
 function format_number(input){
@@ -22,6 +23,6 @@ function format_number(input){
     }
     value = formattedInput.join("")
     input = input.setSelectionRange(pos, pos)
-    return value
+    return [value, pos]
 }
 
