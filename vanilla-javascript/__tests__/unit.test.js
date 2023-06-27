@@ -1,10 +1,8 @@
-import { JSDOM } from 'jsdom';
-
-const dom = new JSDOM('<!DOCTYPE html><html><body><input id="phone"></body></html>');
-global.document = dom.window.document;
-global.window = dom.window;
-
 describe('formatNumber', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '<input id="phone">'
+  })
+
   it('should format phone number input correctly', () => {
     const phoneInput = document.getElementById('phone');
     
