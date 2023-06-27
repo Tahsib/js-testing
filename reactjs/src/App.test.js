@@ -1,31 +1,36 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
+import userEvent from '@testing-library/user-event'
 import App from "./App";
 
 describe("App", () => {
-  it("should format phone number correctly", () => {
+  it("should format phone number correctly", async () => {
     const { getByLabelText } = render(<App />);
     const phoneInput = getByLabelText("(123) 456-7890");
 
-    fireEvent.change(phoneInput, { target: { value: "1234567890" } });
+    await userEvent.type(phoneInput, "1234567890" );
     expect(phoneInput.value).toBe("(123) 456-7890");
 
-    fireEvent.change(phoneInput, { target: { value: "1234567890123456" } });
+
+    await userEvent.clear(phoneInput);
+    await userEvent.type(phoneInput, "1234567890123456" );
     expect(phoneInput.value).toBe("(123) 456-7890");
 
-    fireEvent.change(phoneInput, { target: { value: "123a456b7890" } });
+    await userEvent.clear(phoneInput);
+    await userEvent.type(phoneInput, "123a456b7890" );
     expect(phoneInput.value).toBe("(123) 456-7890");
 
-    fireEvent.change(phoneInput, { target: { value: "1234567890abcd" } });
+    await userEvent.clear(phoneInput);
+    await userEvent.type(phoneInput, "1234567890abcd" );
     expect(phoneInput.value).toBe("(123) 456-7890");
   });
 
-  it("should put cursor at right place", () => {
+  it("should put cursor at right place", async () => {
     const { getByLabelText } = render(<App />);
     const phoneInput = getByLabelText("(123) 456-7890");
 
-    fireEvent.change(phoneInput, { target: { value: "(123) 456-7890" } });
-    expect(phoneInput.value).toBe("(123) 456-7890");
-    expect(phoneInput.selectionStart).toBe(5);
+    await userEvent.type(phoneInput, "(123)456-7890");
+    expect(phoneInput.value).toBe("(123)456-7890");
+    expect(phoneInput.selectionStart).toBe(13);
   });
 });
